@@ -33,7 +33,6 @@ public class LinearEquation {
 
     // String information methods:
     public String slopeStr() {
-        boolean neg = (p2.y<p1.y ^ p2.x<p1.x);
         int dy = Math.abs(p2.y - p1.y);
         int dx = Math.abs(p2.x - p1.x);
 
@@ -42,7 +41,9 @@ public class LinearEquation {
         } else if (dy == dx) {
             return "x";
         } else {
+            boolean neg = (p2.y<p1.y ^ p2.x<p1.x);
             int gcd = new BigInteger(String.valueOf(p2.y-p1.y)).gcd(new BigInteger(String.valueOf(p2.x-p1.x))).intValue();
+
             return String.format("%s%s/%sx", neg ? "-" : "", dy/gcd, dx/gcd);
         }
     }
