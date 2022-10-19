@@ -5,15 +5,21 @@ public class LinearEquationRunner {
         Scanner scan = new Scanner(System.in);
 
         System.out.print("Enter first coordinate: ");
-        String p1 = scan.nextLine();
+        Point p1 = new Point(scan.nextLine());
         System.out.print("Enter second coordinate: ");
-        String p2 = scan.nextLine();
+        Point p2 = new Point(scan.nextLine());
 
-        LinearEquation equation = new LinearEquation(p1,p2);
-        System.out.println(equation.lineInfo());
+        if (p2.x != p1.x) {
+            LinearEquation equation = new LinearEquation(p1, p2);
+            System.out.println(equation.lineInfo());
 
-        System.out.print("Enter a value for x: ");
-        double testX = scan.nextDouble();
-        System.out.printf("The point on the line is: (%s, %s)", testX, equation.calc(testX));
+            System.out.print("Enter a value for x: ");
+            double testX = scan.nextDouble();
+            System.out.printf("The point on the line is: (%s, %s)", testX, equation.calc(testX));
+
+        } else {
+            System.out.println("These points do not form a function and have an undefined slope.");
+            System.out.printf("This equation can be represented by: x = %s", p1.x);
+        }
     }
 }
