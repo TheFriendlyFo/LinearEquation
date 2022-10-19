@@ -39,7 +39,7 @@ public class LinearEquation {
 
         if (dy == 0) {
             return "";
-        } else if (dy == 1 && dx == 1) {
+        } else if (dy == dx) {
             return "x";
         } else {
             int gcd = new BigInteger(String.valueOf(p2.y-p1.y)).gcd(new BigInteger(String.valueOf(p2.x-p1.x))).intValue();
