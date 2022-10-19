@@ -8,8 +8,4 @@ public class Point {
         this.x = Integer.parseInt(coordHalves[0]);
         this.y = Integer.parseInt(coordHalves[1].trim());
     }
-
-    public String getPoint() {
-        return String.format("(%s, %s)",x,y);
-    }
 }
