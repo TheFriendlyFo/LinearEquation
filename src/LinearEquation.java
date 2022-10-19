@@ -27,15 +27,23 @@ public class LinearEquation {
         if (dy == 0) {
             return "";
         } else if (dy == 1 && dx == 1) {
-            return "x + ";
+            return "x";
         } else {
             int gcd = new BigInteger(String.valueOf(p2.y-p1.y)).gcd(new BigInteger(String.valueOf(p2.x-p1.x))).intValue();
-            return String.format("%s/%sx + ", dy/gcd, dx/gcd);
+            return String.format("%s/%sx", dy/gcd, dx/gcd);
         }
     }
 
     public String equation() {
-        return String.format("y = %s%s", slopeStr(), yIntercept());
+        String slopeStr = slopeStr();
+        Double yInt = yIntercept();
+        if (yInt != 0.0 && !slopeStr.isEmpty()) {
+            return String.format("y = %s + %s", slopeStr(), yIntercept());
+        } else if (slopeStr.isEmpty()) {
+            return String.format("y = %s", yInt);
+        } else {
+            return String.format("y = %s", slopeStr);
+        }
     }
 
     public double yIntercept() {
@@ -51,7 +59,7 @@ public class LinearEquation {
     public String lineInfo() {
         return String.format("Equation of the line going through points %s and %s:\n", p1.coords, p2    .coords) +
                 equation() +
-                String.format("\n\nSlope: %s\n", slope()) +
+                String.format("\n\nSlope: %s\n", slopeStr()) +
                 String.format("Distance between the two points: %s\n", dist()) +
                 String.format("Y intercept: %s\n", yIntercept()) +
                 String.format("Angle of the second point relative to the first: %s°\n", angle());
