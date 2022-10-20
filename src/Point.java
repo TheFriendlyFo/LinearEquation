@@ -16,6 +16,7 @@ public class Point {
     }
 
     Point(String cords) {
+        // Splits input string int two coordinates:
         String[] cordHalves = cords.substring(1,cords.length()-1).split(",");
         this.x = Integer.parseInt(cordHalves[0]);
         this.y = Integer.parseInt(cordHalves[1].trim());

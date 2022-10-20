@@ -55,6 +55,7 @@ public class LinearEquation {
         }
     }
 
+    // Formats the final equation:
     public String equation() {
         String slopeStr = slopeStr();
         double yInt = yIntercept();
@@ -65,6 +66,8 @@ public class LinearEquation {
             return String.format("y = %s", slopeStr().isEmpty() ? yInt : slopeStr);
         }
     }
+
+    // Returns all line information as a string:
     public String lineInfo() {
         return String.format("The two points used to construct the equation are: %s, and %s\n", p1.cords, p2.cords) +
                 String.format("Equation: %s\n", equation()) +
