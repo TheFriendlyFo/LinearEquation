@@ -2,8 +2,10 @@ import java.util.Scanner;
 
 public class LinearEquationRunner {
     public static void main(String[] args) {
+
         // Sets up a scanner for input:
         Scanner scan = new Scanner(System.in);
+        System.out.println("Welcome!");
 
         // Gets points for equation:
         System.out.print("Enter first coordinate: ");
@@ -21,7 +23,7 @@ public class LinearEquationRunner {
             // Gets the y value for a given x value:
             System.out.print("Enter a value for x: ");
             double testX = scan.nextDouble();
-            System.out.printf("The point on the line is: (%s, %s)", testX, equation.calc(testX));
+            System.out.printf("The point on the line is: (%s, %s)", testX, equation.coordinateForX(testX));
 
         } else {
             // If the entries result in an undefined line, it sends the user an error message:

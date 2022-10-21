@@ -13,14 +13,16 @@ public class LinearEquation {
         return Math.round(roundNum * Math.pow(10, decimals)) / Math.pow(10,decimals);
     }
 
+    private static double roundToHundreth(double roundNum) {return round(roundNum,2);}
+
     // Calculation methods:
 
     // Calculates and returns the distance between the two points with the standard formula rounded to the hundredths:
-    public double dist() {
+    public double distance() {
         return round(Math.sqrt(Math.pow(p2.x-p1.x,2) + Math.pow(p2.y-p1.y, 2)), 2);
     }
     // Calculates and returns the slope as a double:
-    public double slope() {return (double) (p2.y - p1.y) / (p2.x-p1.x);}
+    public double slope() {return roundToHundreth((double) (p2.y - p1.y) / (p2.x-p1.x));}
     // Calculates, rounds, and returns y intercept:
     public double yIntercept() {
         return round((p2.y - slope() * p2.x), 2);
@@ -30,26 +32,27 @@ public class LinearEquation {
         return round(Math.toDegrees((Math.atan(slope()) + Math.PI * p2.x >= p1.x ? 2 : 1) % (Math.PI*2)), 3);
     }
     // Calculates a y value for a given x input:
-    public double calc(double x) {return slope() * x + yIntercept();}
+    public double coordinateForX(double x) {return slope() * x + yIntercept();}
 
     // Calculates and formats the slope as a fraction:
     public String slopeStr() {
-        int dy = Math.abs(p2.y - p1.y);
-        int dx = Math.abs(p2.x - p1.x);
+        int dy = p2.y - p1.y;
+        int dx = p2.x - p1.x;
+        double slope = slope();
+        String sign = slope<0 ? "-" : "";
 
-        if (dy == 0) {
+        if (slope == 0.0) {
             // If the slope is 0, it returns nothing, as the x term will be 0:
             return "";
-        } else if (dy == dx) {
+        } else if (Math.abs(slope) == 1.0) {
             // If the slope is one, it simplifies the slope to just "x":
-            return "x";
+            return sign + "x";
         } else {
             // Calculates the sign in front of the slope fraction:
-            String sign = (p2.y<p1.y ^ p2.x<p1.x) ? "-" : "";
             // Uses some weird BigInteger voodoo to find the gcd and simplify the fraction:
-            int gcd = new BigInteger(String.valueOf(p2.y-p1.y)).gcd(new BigInteger(String.valueOf(p2.x-p1.x))).intValue();
-            dy /= gcd;
-            dx /= gcd;
+            int gcd = new BigInteger(String.valueOf(dy)).gcd(new BigInteger(String.valueOf(dx))).intValue();
+            dy = Math.abs(dy) / gcd;
+            dx = Math.abs(dx) / gcd;
             // Does some extra formatting and returns the result:
             return String.format("%s%s%sx", sign, dy, dx == 1 ? "" : "/" + dx);
         }
@@ -59,9 +62,10 @@ public class LinearEquation {
     public String equation() {
         String slopeStr = slopeStr();
         double yInt = yIntercept();
+        String sign = yInt>0 ? "+" : "-";
 
         if (yInt != 0.0 && !slopeStr.isEmpty()) {
-            return String.format("y = %s + %s", slopeStr(), yIntercept());
+            return String.format("y = %s %s %s", slopeStr(), sign, Math.abs(yInt));
         } else {
             return String.format("y = %s", slopeStr().isEmpty() ? yInt : slopeStr);
         }
@@ -73,7 +77,7 @@ public class LinearEquation {
                 String.format("Equation: %s\n", equation()) +
                 String.format("Slope: %s\n", slope()) +
                 String.format("Y intercept: %s\n", yIntercept()) +
-                String.format("Distance between the two points: %s\n", dist()) +
+                String.format("Distance between the two points: %s\n", distance()) +
                 String.format("Angle of the second point relative to the first: %s\n", angle());
     }
 }
